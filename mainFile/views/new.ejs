@@ -1,0 +1,55 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <body>
+
+
+        <h3 class="text-center text-primary fw-bold">Create New Listing</h3>
+        <div class="new-list-container card">
+            <form action="/listing" method="POST" class="form-container needs-validation" novalidate >
+                <div class="mb-3">
+                    <input name="listing[title]" type="text" class="form-control" placeholder="Enter title" required>
+                    <div class="invalid-feedback">
+                        Enter the title
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <textarea name="listing[description]" class="form-control" placeholder="Enter description" rows="3"
+                        required></textarea>
+                        <div class="invalid-feedback">
+                            Enter a sort description
+                        </div>
+                </div>
+
+                <div class="mb-3">
+                    <input name="listing[price]" type="text" class="form-control" placeholder="Enter price" required>
+                    <div class="invalid-feedback">
+                        Enter a valid price
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <input name="listing[country]" type="text" class="form-control" placeholder="Enter country"
+                        required>
+                        <div class="invalid-feedback">
+                            Enter a country name
+                        </div>
+                </div>
+
+                <div class="mb-3">
+                    <input name="listing[location]" type="text" class="form-control" placeholder="Enter location"
+                        required>
+                        <div class="invalid-feedback">
+                            Enter the location
+                        </div>
+                </div>
+
+                <div class="mb-3">
+                    <input name="imageURL" type="text" class="form-control" placeholder="Enter image URL/link" >
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Add Listing</button>
+            </form>
+        </div>
+
+    </body>

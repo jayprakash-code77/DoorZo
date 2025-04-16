@@ -1,0 +1,237 @@
+:root {
+    --primary: #1E3A8A;
+    --primary-light: #60A5FA;
+    --background: #FAF9F6;
+    --white: #FFFFFF;
+    --accent: #D97706;
+    --beige: #FDF6EC;
+    --success: #22C55E;
+    --error: #EF4444;
+    --warning: #FACC15;
+    --text-dark: #1F2937;
+    --text-light: #F9FAFB;
+}
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    background-color: var(--background);
+    color: var(--text-dark);
+}
+
+/* Navbar */
+.navbar {
+    height: 5rem;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+.fa-map-location-dot {
+    color: var(--error);
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+}
+
+/* Footer */
+.f-info-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-info-socials i {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.f-info {
+    text-align: center;
+    height: 8rem;
+    background-color: var(--beige);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    color: var(--text-dark);
+}
+
+/* Cards */
+.card {
+    border: none !important;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    background: var(--background);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+.card:hover {
+    transform: scale(1);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.listing-links {
+    text-decoration: none;
+    color: var(--text-dark);
+}
+
+.listing-links:hover .card {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+/* Create New List Page */
+.new-list-container {
+    max-width: 40rem !important;
+    margin: auto;
+    padding: 20px;
+    background: var(--background);
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-container {
+    padding: 20px;
+}
+
+.form-control {
+    border-radius: 6px;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: var(--primary);
+    color: var(--text-light);
+    border: none;
+    padding: 8px 16px;
+}
+
+.btn:hover {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--text-light);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+
+/* Show List Page */
+.show-list-container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.listing-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Edit List Page */
+.edit-list-container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.edit-form-card {
+    border-radius: 12px;
+    background: var(--background);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Home Page Hero Section */
+.hero {
+    position: relative;
+    color: var(--text-light);
+    padding: 100px 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+    filter: blur(1px);
+    z-index: -2;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.hero h1,
+.hero p,
+.hero a {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
