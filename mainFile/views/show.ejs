@@ -1,43 +1,139 @@
 <% layout("./layouts/boilerplate.ejs") %>
 
-    <body>
-        <div class="show-list-container my-4">
-            <div class="card shadow-sm p-4">
-                <!-- Image -->
-                    <img src="<%= 
+  <body>
+    <div class="show-list-container my-4">
+      <div class="card shadow-sm p-4">
+        <!-- Image -->
+        <img src="<%= 
                     listing.image.url != ""  ? listing.image.url:'/images/default.avif'
                     %>" class="card-img-top listing-img" alt="Listing Image">
 
 
-                    <div class="card-body text-center">
-                        <h3 class="text-primary">
-                            <%= listing.title %>
-                        </h3>
+        <div class="card-body text-center">
+          <h3 class="text-primary">
+            <%= listing.title %>
+          </h3>
 
-                        <ul class="list-group list-group-flush text-start">
-                            <li class="list-group-item"><strong>Description:</strong>
-                                <%= listing.description %>
-                            </li>
-                            <li class="list-group-item"><strong>Price:</strong> &#8377; <%= listing.price ?
-                                    listing.price.toLocaleString("en-IN") : "N/A" %> / night
-                            </li>
-                            <li class="list-group-item"><strong>Location:</strong>
-                                <%= listing.location %>
-                            </li>
-                            <li class="list-group-item"><strong>Country:</strong>
-                                <%= listing.country %>
-                            </li>
-                        </ul>
+          <ul class="list-group list-group-flush text-start">
+            <li class="list-group-item"><strong>Description:</strong>
+              <%= listing.description %>
+            </li>
+            <li class="list-group-item"><strong>Price:</strong> &#8377; <%= listing.price ?
+                listing.price.toLocaleString("en-IN") : "N/A" %> / night
+            </li>
+            <li class="list-group-item"><strong>Location:</strong>
+              <%= listing.location %>
+            </li>
+            <li class="list-group-item"><strong>Country:</strong>
+              <%= listing.country %>
+            </li>
+          </ul>
 
-                        <!-- Buttons (Edit & Delete) -->
-                        <div class="mt-4">
-                            <a href="/listing/<%= listing._id %>/edit" class="btn btn-warning mx-2">Edit Listing</a>
+          <!-- Buttons (Edit & Delete) -->
+          <div class="mt-4">
+            <a href="/listing/<%= listing._id %>/edit" class="btn btn-warning mx-2">Edit Listing</a>
 
-                            <form action="/listing/<%= listing._id %>?_method=DELETE" method="post" class="d-inline">
-                                <button class="btn btn-danger">Delete Listing</button>
-                            </form>
-                        </div>
-                    </div>
-            </div>
+            <form action="/listing/<%= listing._id %>?_method=DELETE" method="post" class="d-inline">
+              <button class="btn btn-danger">Delete Listing</button>
+            </form>
+          </div>
         </div>
-    </body>
+      </div>
+    </div>
+
+
+    <!--Review input section  -->
+    <section>
+      <div class="container my-5 py-5 text-body">
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="card shadow p-4">
+              <div class="card-body p-4">
+                <form action="/listing/<%= listing._id %>/review" method="POST" class="needs-validation" novalidate>
+                  <h5 class="mb-3">Your Review</h5>
+
+                  <!-- stars to take the rating -->
+                  <label class="form-label" for="textAreaExample">Rating</label>
+                  <div class="rating d-flex gap-4 mb-4 mt-2">
+                    <i class="far fa-star fa-lg text-danger" title="Bad" onclick="rate(1)"></i>
+                    <i class="far fa-star fa-lg text-danger" title="Poor" onclick="rate(2)"></i>
+                    <i class="far fa-star fa-lg text-danger" title="OK" onclick="rate(3)"></i>
+                    <i class="far fa-star fa-lg text-danger" title="Good" onclick="rate(4)"></i>
+                    <i class="far fa-star fa-lg text-danger" title="Excellent" onclick="rate(5)"></i>
+                  </div>
+
+                  <!-- Hidden input to store rating -->
+                  <div class="mb-3">
+                    <!-- It is really important to note : Browser validation only works for visible inputs or those that aren’t type="hidden". That’s why we're using type="number" and hiding it via "hidden" attribute instead of type="hidden". -->
+                    <input type="number" name="review[rating]" id="ratingValue" hidden required min="1" />
+                    <div class="invalid-feedback">
+                      Give a rating!
+                    </div>
+                  </div>
+
+                  <div class="form-outline mb-3">
+                    <textarea class="form-control" id="textAreaExample" name="review[comment]" rows="4"
+                      required></textarea>
+                    <div class="invalid-feedback">
+                      Cannot be empty! Give some review.
+                    </div>
+                    <label class="form-label" for="textAreaExample">What is your view?</label>
+                  </div>
+
+                  <div class="d-flex justify-content-between">
+                    <button type="reset" class="btn btn-success">Clear</button>
+                    <button type="submit" class="btn btn-danger">
+                      Submit <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+    <!-- Review display section -->
+    <h2>Reviews of the Customers</h2>
+    <hr>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      <% listing.reviews.forEach((review)=> { %>
+        <div class="col">
+          <div class="card p-4 ml-4 shadow-lg">
+            <!-- <img src="" class="card-img-top" alt="..."> <For the user profile image> -->
+            <div class="displayRating d-flex gap-4 mb-4 mt-2" data-rating="<%= review.rating %>">
+              <i class="far fa-star fa-lg text-danger" title="Bad"></i>
+              <i class="far fa-star fa-lg text-danger" title="Poor"></i>
+              <i class="far fa-star fa-lg text-danger" title="OK"></i>
+              <i class="far fa-star fa-lg text-danger" title="Good"></i>
+              <i class="far fa-star fa-lg text-danger" title="Excellent"></i>
+            </div>
+
+            <div class="card-body">
+              <!-- <h5 class="card-title">User Name</h5> -->
+              <p class="card-text">
+                <%= review.comment %>
+              </p>
+            </div>
+            <!-- review delete button -->
+            <div class="d-flex justify-content-end">
+              <form action="/listing/<%= listing._id %>/review/<%= review._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger p-0 w-0">
+                  Delete <i class="fas"></i>
+                </button>
+              </form>
+              <!-- <button type="reset" class="btn btn-success">Clear</button> -->
+            </div>
+          </div>
+        </div>
+        <% }); %>
+
+    </div>
+
+  </body>

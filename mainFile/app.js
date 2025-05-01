@@ -1,13 +1,20 @@
 const express = require("express");
 const app = express();
 const mongoose = require("./config/dbConfig");
-const Listing = require("./models/listing");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsmate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js");
-const listingSchema = require("./schemaValidation.js");
+// require("./middleware/postMiddleware.js");
+require("./middleware/postMiddleware"); 
+// Schema validation functions
+const { listingSchema, reviewSchema } = require("./schemaValidation.js");
+
+
+// Models Required
+const {Listing} = require("./models/listing");
+const {Review} = require("./models/review");
 
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true })); // This is important!
@@ -36,12 +43,27 @@ app.get(
 );
 
 
+
+
+// function for validating the listing schema
 const validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
 
     if (error) {
         let msg = error.details.map(el => el.message).join(", ");
-        throw new ExpressError(400, error);
+        throw new ExpressError(400, msg);
+    } else {
+        next();
+    }
+}
+
+// function for validating the review schema
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+
+    if (error) {
+        let msg = error.details.map(el => el.message).join(", ");
+        throw new ExpressError(400, msg);
     } else {
         next();
     }
@@ -69,7 +91,7 @@ app.get("/listing/new", (req, res) => {
 // show rout
 app.get("/listing/:id", async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("reviews");
     res.render("show.ejs", { listing });
 });
 
@@ -145,6 +167,73 @@ app.delete(
 
 
 
+// Review related routes   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// input review route
+app.post(
+    "/listing/:id/review",
+    validateReview,
+    wrapAsync(async (req, res) => {
+        let id = req.params.id;
+        let data = req.body.review;
+
+        // creating the new review //
+        let newReview = new Review(data);
+
+        // adding the reference of review to the list
+        let list = await Listing.findById({ _id: id });
+        list.reviews.push(newReview);
+
+        // saving the changes
+        await list.save();
+        await newReview.save();
+
+        // debug
+        console.log("Review created for :",id);
+
+        // redirect
+        res.redirect(`/listing/${id}`);
+    }));
+
+
+// Delete review route
+app.delete(
+    "/listing/:id/review/:reviewId",
+    wrapAsync(async (req, res) => {
+        let { id, reviewId } = req.params;
+
+        await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+        let deletedReview = await Review.findByIdAndDelete(reviewId);
+        
+        // debug
+        console.log("Review Deleted :",deletedReview);
+
+        // redirect
+        res.redirect(`/listing/${id}`);
+    }));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // this will handle all the request which are sent on the invalid rout
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page not found!!!"));
@@ -152,7 +241,7 @@ app.all("*", (req, res, next) => {
 
 // this middleware will handle all the errors that will occure in the page
 app.use((err, req, res, next) => {
-    let{statusCode=500, message="Something went wrong!!!"} = err;
+    let { statusCode = 500, message = "Something went wrong!!!" } = err;
     // console.log(err.stack);
     res.status(statusCode).render("error.ejs", { err });
 });
