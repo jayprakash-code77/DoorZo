@@ -11,7 +11,7 @@ const listingSchema = Joi.object({
         location: Joi.string().required(),
         country: Joi.string().required(),
         price: Joi.number().required().min(0),
-        image: Joi.string().allow("", null),
+        image: Joi.string().allow("",null),
     }).required()
 });
 
@@ -34,6 +34,7 @@ const validateListing = (req, res, next) => {
 
     if (error) {
         let msg = error.details.map(el => el.message).join(", ");
+        console.log(msg," from misslwares folderS");
         throw new ExpressError(400, msg);
     } else {
         next();

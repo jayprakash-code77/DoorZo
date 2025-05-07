@@ -4,9 +4,10 @@
     <div class="show-list-container my-4">
       <div class="card shadow-sm p-4">
         <!-- Image -->
-        <img src="<%= 
-                    listing.image.url != ""  ? listing.image.url:'/images/default.avif'
-                    %>" class="card-img-top listing-img" alt="Listing Image">
+        <img src="<%= isValidImageUrl(listing.image.url) ? listing.image.url : '/images/default.avif' %>"
+          class="card-img-top listing-img" alt="Listing Image"
+          onerror="this.onerror=null; this.src='/images/default.avif';">
+
 
 
         <div class="card-body text-center">
@@ -135,5 +136,8 @@
         <% }); %>
 
     </div>
+
+    <!-- script for checking weather the url of image is an proper link -->
+    <script src=""></script>
 
   </body>

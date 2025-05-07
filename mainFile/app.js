@@ -5,9 +5,41 @@ const methodOverride = require("method-override");
 const ejsmate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js")
 const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 // database configuration
 require("./config/dbConfig.js");
+
+const sessionOptions = {
+    secret: "mySuperSecretKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + (7 * 24 * 60 * 60 * 1000),
+        maxAge: Date.now() + (7 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+    }
+}
+
+
+
+
+
+// session middleware
+app.use(session(sessionOptions));
+
+// flash middleware
+app.use(flash());
+
+// setting the local flash messages
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
+
+
 
 
 // required the main route file
@@ -15,8 +47,7 @@ const routes = require("./routes/index.js");
 
 
 // Models Required
-const {Listing} = require("./models/listing");
-
+const { Listing } = require("./models/listing");
 
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true })); // This is important!

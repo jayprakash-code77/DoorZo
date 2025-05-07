@@ -6,8 +6,12 @@
             <% list.forEach(listItem=> { %>
                 <a href="/listing/<%= listItem._id %>" class="listing-links">
                     <div class="card col">
-                        <img src="<%= listItem.image.url != ""  ? listItem.image.url:'/images/default.avif' %>" class="card-img-top" alt="listing_images"
-                            style=" height: 18rem;">
+
+                        <img src="<%= isValidImageUrl(listItem.image.url) ? listItem.image.url : '/images/default.avif' %>"
+                            class="card-img-top listing-img" alt="Listing Image"
+                            onerror="this.onerror=null; this.src='/images/default.avif';">
+
+
                         <div class="card-body">
                             <p class="card-text">
                                 <b>

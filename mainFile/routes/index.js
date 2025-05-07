@@ -8,8 +8,8 @@ const listingRouter = require("./listingRoute.js");
 const reviewRouter = require("./reviewRoute.js");
 
 
-router.use("/listing", listingRouter);
-router.use("/listing", reviewRouter);
+router.use("/listing", [listingRouter,reviewRouter]);
+// router.use("/listing", );
 
 
 module.exports = router;
