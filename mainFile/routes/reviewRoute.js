@@ -35,6 +35,9 @@ router.post(
         // debug
         console.log("Review created for :",id);
 
+        // creating the flash message 
+        req.flash("success","Review created!!!");
+
         // redirect
         res.redirect(`/listing/${id}`);
     }));
@@ -51,6 +54,9 @@ router.delete(
         
         // debug
         console.log("Review Deleted :",deletedReview);
+
+        // creating flash message for deleted review
+        req.flash("success","Review deleted!!!");
 
         // redirect
         res.redirect(`/listing/${id}`);
