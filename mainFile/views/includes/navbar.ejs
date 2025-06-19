@@ -1,15 +1,56 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top" >
+<style>
+    .btn-search {
+        background-color: #EF4444;
+        color: fff;
+        padding: 0 1rem 0 1rem;
+        border-radius: 1rem;
+    }
+
+    .btn-search:hover {
+        background-color: #EF4444;
+        color: fff;
+    }
+
+    .btn-search i {
+        display: inline;
+        margin-right: 0.5rem;
+    }
+    
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa-solid fa-map-location-dot"></i></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        <a class="navbar-brand" href="/listing"><i class="fa-solid fa-map-location-dot"></i></a>
+
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
+
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/listing">All Listing</a>
-                <a class="nav-link" href="/listing/new">Add new listing</a>
+                <!-- <a class="nav-link" href="/">Home</a> --> <!-- This is home page. -->
+                <a class="nav-link" href="/listing">Explore</a>
             </div>
+
+            <div class="navbar-nav ms-auto">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search destination"/>
+                    <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                </form>
+            </div>
+
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/listing/new">Rent Your Home</a>
+                <% if(currentUser==undefined) { %>
+                    <a class="nav-link" href="/auth/signup">Signup</a>
+                    <a class="nav-link" href="/auth/login">Login</a>
+                    <% } %>
+
+                        <% if(currentUser) { %>
+                            <a class="nav-link" href="/auth/logout">Logout</a>
+                            <% } %>
+            </div>
+
         </div>
     </div>
 </nav>

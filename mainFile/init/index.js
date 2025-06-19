@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Listing = require("../models/listing.js");
+const { Listing } = require("../models/listing.js");
 const Data = require("./data.js");
 
 let MONGO_URL = "mongodb://127.0.0.1:27017/Triple_T";
@@ -21,6 +21,13 @@ db.on("error", (err) => {
 // function to delete the existing data and add the data in "data.js" files
 const initDB = async () => {
     await Listing.deleteMany({});
+
+    // adding the one owner to the all listings till now.
+    Data.data = Data.data.map((obj) => ({
+        ...obj,
+        owner: '682ddd3557edea941815fddc'
+    }));
+
     await Listing.insertMany(Data.data);
     console.log("Data inserted successfully!!!");
 }

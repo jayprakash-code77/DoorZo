@@ -1,1 +1,56 @@
 1. Use "joi" for the validation of schema. ************************
+
+
+
+
+
+
+
+Problem that exists:
+1. http://localhost:8080/listing/683318298fa455eaffb163b5/review:-  This error occurs when the user tries to create the review but he is not logged-in. 
+
+Error
+Page not found!!!
+
+
+2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const { Listing } = require("../middleware/isOwner"); : This Warning: """Accessing non-existent property 'Listing' of module exports inside circular dependency""". 
+Solution :Warning means that there is a circular dependency in your code — specifically, two or more modules are requiring each other in a way that forms a loop. And in this loop, one module is trying to access a property (Listing) before it's fully defined.
+
+What is a Circular Dependency?
+A circular dependency occurs when:
+    Module A requires Module B
+    And Module B requires Module A (either directly or indirectly)
+    When Node.js encounters a circular dependency, it partially evaluates the module during the first require, which can lead to undefined properties.
+
+
+
+
+
+
+
+
+
+
+
+
+#Features that I have to add 👍
+1. Filter by category.
+2. User Profile

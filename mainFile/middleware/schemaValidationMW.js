@@ -11,7 +11,17 @@ const listingSchema = Joi.object({
         location: Joi.string().required(),
         country: Joi.string().required(),
         price: Joi.number().required().min(0),
-        image: Joi.string().allow("",null),
+        image: Joi.object({
+            url: Joi.string(),
+            filename: Joi.string()
+        }).allow("", null),
+        geometry: Joi.object({
+            type: Joi.string().valid("Point"),
+            coordinates: Joi.array()
+                .items(Joi.number())
+                .length(2) // Must contain exactly [longitude, latitude]
+                .required()
+        })
     }).required()
 });
 
@@ -22,7 +32,7 @@ const reviewSchema = Joi.object({
         rating: Joi.number().required().min(1).max(5),
         comment: Joi.string().required(),
         userId: Joi.string(),
-        listId: Joi.string()
+        listId: Joi.string(),
     }).required(),
 });
 
@@ -34,7 +44,7 @@ const validateListing = (req, res, next) => {
 
     if (error) {
         let msg = error.details.map(el => el.message).join(", ");
-        console.log(msg," from misslwares folderS");
+        console.log(msg, " from misslwares folderS");
         throw new ExpressError(400, msg);
     } else {
         next();
@@ -47,6 +57,7 @@ const validateReview = (req, res, next) => {
 
     if (error) {
         let msg = error.details.map(el => el.message).join(", ");
+        console.log(msg, " from misslwares folderS");
         throw new ExpressError(400, msg);
     } else {
         next();

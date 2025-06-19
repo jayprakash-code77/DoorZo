@@ -5,7 +5,7 @@
 
         <h3 class="text-center text-primary fw-bold">Create New Listing</h3>
         <div class="new-list-container card">
-            <form action="/listing" method="POST" class="form-container needs-validation" novalidate >
+            <form action="/listing" method="POST" class="form-container needs-validation" novalidate enctype="multipart/form-data" >
                 <div class="mb-3">
                     <input name="listing[title]" type="text" class="form-control" placeholder="Enter title" required>
                     <div class="invalid-feedback">
@@ -44,8 +44,12 @@
                         </div>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <input name="listing[image]" type="text" class="form-control" placeholder="Enter image URL/link" >
+                </div> -->
+
+                <div class="mb-3">
+                    <input name="listing[image]" type="file" class="form-control" >
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Add Listing</button>
