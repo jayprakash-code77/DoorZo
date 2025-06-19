@@ -1,3 +1,12 @@
+// .env configuration
+if (process.env.NODE_ENV != "production") {
+    require('dotenv').config()
+    // console.log(process.env.PORT);
+}
+
+
+
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -8,9 +17,27 @@ const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 
+
+
+// middlewares
+const { isLoggedIn } = require("./middleware/authMiddleware.js");
+
+
+
+
+
+
+// requiring the packages related to user authentication and authorization (Passport)
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const { User } = require("./models/user.js");
+
+
+
 // database configuration
 require("./config/dbConfig.js");
 
+// using Express-session 
 const sessionOptions = {
     secret: "mySuperSecretKey",
     resave: false,
@@ -22,22 +49,49 @@ const sessionOptions = {
     }
 }
 
-
-
-
-
 // session middleware
 app.use(session(sessionOptions));
 
-// flash middleware
+// flash middleware : 
 app.use(flash());
 
-// setting the local flash messages
+
+
+
+
+// Code and middlwares related to User authentication using the "passport". >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//****** */ To use Passport, we also need session which is already used. So this code should be after the implemetation of of session.
+
+// Configure passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure passport-local to use "User model" for authentication
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+
+
+
+
+// Setting the local flash messages/ currentUser >>>
 app.use((req, res, next) => {
+    // storing the success and error message of flash
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+
+    // storing the current user data to locals
+    res.locals.currentUser = req.user;
+
     next();
 })
+
+
+
+
 
 
 
@@ -69,7 +123,11 @@ app.use("/", routes);
 
 
 
+
+
+
 // home rout
+/*
 app.get(
     "/",
     wrapAsync(async (req, res) => {
@@ -77,8 +135,7 @@ app.get(
         res.render("home.ejs", { featuredList: allListings });
     })
 );
-
-
+*/
 
 // this will handle all the request which are sent on the invalid rout
 app.all("*", (req, res, next) => {

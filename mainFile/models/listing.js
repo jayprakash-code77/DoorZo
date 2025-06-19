@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 const { Review } = require("./review");
+const { User } = require("./user");
 
 const ListingSchema = new mongoose.Schema({
     title: {
@@ -32,7 +33,22 @@ const ListingSchema = new mongoose.Schema({
             type: Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
+    ],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    geometry: {
+        type: {
+            type: String,
+            enum: ["Point"],
+            required: true,
+        },
+        coordinates: {
+            type: [Number],
+            required: true,
+        },
+    },
 }, {
     timestamps: true
 });
