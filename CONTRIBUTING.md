@@ -172,7 +172,7 @@ This structure follows common Node.js MVC patterns while maintaining flexibility
 
 
 
-## 🤝 How to Contribute
+# 🤝 How to Contribute
 
 Contribution Workflow
 1. Find an issue or propose a new feature
@@ -181,11 +181,86 @@ Contribution Workflow
 ```bash
 git checkout -b feat/your-feature-name
 ```
-4. Commit changes following Conventional Commits:
+4. Make your changes following the above project structure.
+5. Commit changes following Conventional Commits:
 ```bash
 git commit -m "feature: add property filtering"
 ```
-5. Push and open a Pull Request
+6. Push to your branch:
+```bash
+git push origin feat/your-feature-name
+```
+7. Open a Pull Request
+
+# 🧩 Where to Contribute
+**For Frontend Developers**
+- `public/` directory: Improve CSS/JS/assets
+- `views/` directory: Enhance templates and layouts
+
+**For Backend Developers**
+- `controllers/`: Add new business logic
+- `models/`: Create new database schemas
+- `middleware/`: Implement new middleware
+
+**For Full-Stack Developers**
+- `routes/`: Create new API endpoints
+- `utils/`: Add helper functions
+- `config/`: Improve application configuration
+
+# 🧑‍💻 Coding Standards
+
+**File Structure:**
+- Keep files in their designated directories
+- Name files descriptively (e.g., userController.js)
+  
+**Code Style:**
+- Follow existing patterns in each directory
+- Use JSDoc comments for complex functions:
+
+```bash
+/**
+ * Authenticates user
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>}
+ */
+async function authenticateUser(req, res) {...}
+```
+
+Testing(Optional):
+- Add tests for new features in corresponding test files
+- Ensure existing tests pass:
+```bash
+npm test
+```
+
+# 🐛 Reporting Issues
+
+**When reporting bugs:**
+1. Check if the issue already exists
+2. Include
+   - Steps to reproduce
+   - Expected vs. actual behavior
+   - Screenshots if applicable
+   - Environment details
+
+# 🙏 Code Review Process
+
+- Maintainers will review your PR.
+- You may need to make adjustments.
+- Once approved, your code will be merged.
+
+# 📜 License
+By contributing, you agree that your contributions will be licensed under the project's MIT License.
+
+**Happy coding! 🚀 Your contributions help make this project better for everyone.**
+
+
+
+
+
+
+
 
 **Code Standards**
 - JavaScript everywhere
