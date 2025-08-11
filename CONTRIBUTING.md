@@ -33,6 +33,7 @@ An open-source platform for property rentals where users can list, browse, and r
 - Node.js 
 - MongoDB Atlas account or local MongoDB
 - Git
+- Nodemon (Optional)
 
 ### Installation
 
@@ -43,34 +44,31 @@ cd mainFile
 ```
 
 #### 2. Set Up Environment Variables
-Create .env files in root directories:
+Create `.env` files in root directories:
 
 ##### /.env
 ```bash
 PORT=8080
-CLOUD_NAME=dgegh81w8
-API_KEY=148543985735397
-API_SECRET=3Tmk0ICmtkU2ULvUAR9q04_x0mU
-
+CLOUD_NAME=exampleCloudName
+API_KEY=1857742199235397
+API_SECRET=3Tmk0I_examle_secret_CmtkU2ULvUAR9q04_x0mU
 CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@dgegh81w8
-MONGO_ATLAS_URL=mongodb+srv://trueekoimpact:60n4PgXwgyLDye2a@trueekocluster0.zxoiyzg.mongodb.net/
+MONGO_URL = "mongodb://127.0.0.1:27017/Triple_T"; 
 ```
+##NOTE: 
+By default, in `config/dbConfig`, the local URL : `MONGO_URL = "mongodb://127.0.0.1:27017/Triple_T"; ` is set. 
 
 
 #### 3. Install Dependencies
 ```bash
-# Install server dependencies
-cd server
+# Install application dependencies
 npm install
 
-# Install client dependencies
-cd ../client
-npm install
 ```
 #### 4. Database Setup
-- Create a free cluster on MongoDB Atlas
+- Create a free cluster on MongoDB Atlas Or Local Database of MongoDB Compass.
 - Get your connection string and add to `.env`
-- Or for local MongoDB:
+
 ```bash
 # For macOS (using Homebrew)
 brew tap mongodb/brew
@@ -80,51 +78,99 @@ brew services start mongodb-community
 
 #### 5. Run the Application
 ```bash
-# From project root directory
+# From project root directory : mainFile
 
-# Start backend server
-cd server
-npm run dev
+nodemon app.js
 
-# In new terminal - start frontend
-cd ../client
-npm start
+OR
+
+node app.js (Optional)
+
 ```
 
 The app should now be running at:
+`http://localhost:8080/listing`
 
-- Frontend: http://localhost:3000
-- Backend: http://localhost:5000
 
 
 ## 🏗️ Project Structure
 ```bash
-real-estate-project/
-├── client/               # React Frontend
-│   ├── public/
-│   └── src/
-│       ├── assets/       # Images, fonts
-│       ├── components/   # Reusable UI components
-│       ├── features/     # Redux slices
-│       ├── hooks/        # Custom hooks
-│       ├── pages/        # Route components
-│       ├── services/     # API calls
-│       ├── App.tsx
-│       └── main.tsx
+Triple_T/
+├── mainFile/ # Primary application files
+├── config/ # Configuration files
+│ ├── database.js # Database configuration
+│ └── server.js # Server settings
 │
-├── server/              # Express Backend
-│   ├── config/          # DB config
-│   ├── controllers/     # Route handlers
-│   ├── middleware/      # Auth middleware
-│   ├── models/          # Mongoose models
-│   ├── routes/          # API endpoints
-│   ├── utils/           # Helper functions
-│   └── server.ts
+├── controllers/ # Business logic handlers
+│ ├── authController.js # Authentication logic
+│ └── apiController.js # API endpoint handlers
 │
-├── .github/            # GitHub workflows
-├── .husky/             # Git hooks
-└── docs/               # Documentation
+├── init/ # Initialization scripts
+├── middleware/ # Custom middleware
+│ ├── auth.js # Authentication middleware
+│ └── errorHandler.js # Error handling
+│
+├── models/ # Database models
+│ ├── User.js # User schema
+│ └── DataModel.js # Primary data schema
+│
+├── node_modules/ # NPM dependencies (auto-generated)
+├── public/ # Static assets
+│ ├── css/ # Stylesheets
+│ ├── js/ # Client-side scripts
+│ └── images/ # Image assets
+│
+├── routes/ # Route definitions
+│ ├── api.js # API routes
+│ └── web.js # Web routes
+│
+├── uploads/ # User uploads directory
+├── utils/ # Utility functions
+│ ├── helpers.js # Helper functions
+│ └── validators.js # Validation utilities
+│
+├── views/ # Template files
+│ ├── layouts/ # Layout templates
+│ └── pages/ # Page templates
+│
+├── .env # Environment variables
+├── .gitignore # Git ignore rules
+├── app.js # Main application entry point
+├── detail.txt # Project details/documentation
+├── package-lock.json # Dependency lockfile
+├── package.json # Project manifest
+└── README.md # Project documentation
 ```
+
+## Key Directories Explained:
+
+1. **config/** - Contains all configuration files for databases, services, and application settings.
+
+2. **controllers/** - Houses the business logic that handles requests and returns responses.
+
+3. **middleware/** - Contains functions that process requests before they reach route handlers.
+
+4. **models/** - Defines data structures and database schemas using Mongoose or similar ORM.
+
+5. **public/** - Stores all static assets served directly to clients (CSS, JS, images).
+
+6. **routes/** - Defines the application endpoints and links them to controllers.
+
+7. **utils/** - Contains reusable utility functions and services used throughout the app.
+
+8. **views/** - Holds template files for server-side rendering (if using templating engine).
+
+## Best Practices:
+
+- Keep `app.js` clean by moving route definitions to the routes/ directory
+- Store all environment variables in `.env` (add to `.gitignore`)
+- Group related functionality in modules within each directory
+- Use consistent naming conventions (camelCase for JS files, kebab-case for templates)
+- Document each directory's purpose in a README.md within the directory
+
+This structure follows common Node.js MVC patterns while maintaining flexibility for different types of applications.
+
+
 
 ## 🤝 How to Contribute
 
@@ -137,12 +183,12 @@ git checkout -b feat/your-feature-name
 ```
 4. Commit changes following Conventional Commits:
 ```bash
-git commit -m "feat: add property filtering"
+git commit -m "feature: add property filtering"
 ```
 5. Push and open a Pull Request
 
 **Code Standards**
-- TypeScript everywhere
+- JavaScript everywhere
 - Functional components with hooks
 - Modular component structure
 - Meaningful variable names
