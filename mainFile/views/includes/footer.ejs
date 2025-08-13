@@ -1,3 +1,87 @@
+<style>
+    /* Ensure the html and body take up at least the full viewport height */
+html, body {
+    height: 100%; /* Important: html needs 100% height for body's flex to work */
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    display: flex; /* Enable flexbox on the body */
+    flex-direction: column; /* Stack children vertically */
+    font-family: "Inter", sans-serif; /* Recommended font */
+}
+
+/* This is a placeholder for your main content area.
+   It pushes the footer to the bottom by growing to fill available space.
+   You should apply this to the main container that wraps all content *above* the footer.
+   For example, if your content is inside a <main> tag or a <div> with a specific class,
+   apply flex-grow: 1 to that element.
+*/
+.content-wrapper { /* Replace 'content-wrapper' with the class/id of your main content container */
+    flex-grow: 1; /* This makes the content area expand and push the footer down */
+}
+
+
+/* Footer specific styling */
+footer {
+    /* background-color: #f8f1f1; Dark background for visibility */
+    color: #fff; /* White text color */
+    padding: 7px 0; /* Vertical padding */
+    width: 100%; /* Ensure footer spans full width */
+    text-align: center; /* Center align content */
+    border-top: 1px solid #444; /* Small top border for separation */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2); /* Subtle shadow at the top */
+    border-top-left-radius: 10px; /* Rounded corners */
+    border-top-right-radius: 10px;
+    margin-top: 7px;
+}
+
+.f-info {
+    display: flex; /* Use flexbox for footer content arrangement */
+    flex-direction: column; /* Stack content vertically on small screens */
+    align-items: center; /* Center items horizontally */
+    gap: 15px; /* Space between elements */
+}
+
+/* Adjust for larger screens to place elements in a row */
+@media (min-width: 768px) {
+    .f-info {
+        flex-direction: row; /* Arrange items in a row */
+        justify-content: space-between; /* Distribute items with space between */
+        max-width: 1200px; /* Max width for content */
+        margin: 0 auto; /* Center the content */
+        padding: 0 20px; /* Horizontal padding */
+    }
+}
+
+.f-info-socials i {
+    font-size: 1.5rem; /* Larger social icons */
+    margin: 0 10px; /* Space between social icons */
+    color: #0f0f0f; /* White icons */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.f-info-socials i:hover {
+    color: #007bff; /* Highlight on hover (e.g., Bootstrap primary color) */
+    cursor: pointer;
+}
+
+.f-info-brand {
+    font-size: 0.9rem; /* Smaller text for copyright */
+    opacity: 0.8; /* Slightly less prominent */
+}
+
+.f-info-links a {
+    color: #fff; /* White links */
+    text-decoration: none; /* No underline */
+    margin: 0 10px; /* Space between links */
+    font-size: 0.9rem;
+    transition: text-decoration 0.3s ease; /* Smooth transition */
+}
+
+.f-info-links a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+</style>
 <footer>
     <div class="f-info">
         <div class="f-info-socials">

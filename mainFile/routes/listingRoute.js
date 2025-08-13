@@ -35,6 +35,13 @@ router.route("/")
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
 
+router.get("/search", (req, res) => {
+    res.send(`Query is : ${req.query.filter}`);
+});
+
+
+
+
 // Router.route to "show a perticular listing" and "to update the the particular listing"
 router.route("/:id")
     .get(listingController.showListing) // show rout to show a particular listing in detail
@@ -55,6 +62,19 @@ router.get(
     isOwner, // this MW will make sure only owner can edit the listing.
     wrapAsync(listingController.renderEditForm)
 );
+
+
+
+
+
+// router.get("/search", (req, res) => {
+//     res.send("Query is :", req.query.filter);
+// })
+
+
+// router.get("/search", (req, res) => {
+//     res.send(`Query is : ${req.query.filter}`);
+// });
 
 
 

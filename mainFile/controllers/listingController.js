@@ -19,9 +19,20 @@ function isValidImageUrl(url) {
     }
 }
 
+
+
+
 module.exports.showAllListing = async (req, res) => {
-    let allListings = await Listing.find({});
+
+    const { category } = req.query; // Get the category from the query parameter
+    let filter = {};
+    if (category && category !== 'All List') { // If a category is provided and it's not "All List"
+        filter = { category: category }; // Create a filter object
+    }
+
+    let allListings = await Listing.find(filter);
     // console.log(allListings);
+
     res.render("allListings.ejs", { list: allListings, isValidImageUrl });
 };
 
@@ -60,13 +71,13 @@ module.exports.createListing = async (req, res, next) => {
     let listing = req.body.listing; // this will return the "listing object" created during the input of data in new.ejs
 
     // Get the cordinates
-    const coords = await geocodeLocation(listing.location,listing.country);
+    const coords = await geocodeLocation(listing.location, listing.country);
 
     // Debug
     /*
     console.log("This geometric co-orrdinates from /constrollers/listingController{creatLisitng} :",coords);
     */
-    
+
 
     // if cordinates are not found, return to /listing/new
     if (!coords) {
@@ -75,10 +86,10 @@ module.exports.createListing = async (req, res, next) => {
     }
 
     // add cordinates to the listing object in the req.body
-      req.body.listing.geometry = coords;
+    req.body.listing.geometry = coords;
 
 
-      
+
 
     // making the proper formate for the Listing object
     req.body.listing.image = {
@@ -134,6 +145,26 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     // accesing the updated list object. In this object, the image will not be an object itself. We we will the image as an object according to the schema.
     let listing = req.body.listing;
+
+    // Get the cordinates
+    const coords = await geocodeLocation(listing.location, listing.country);
+
+    // Debug
+    /*
+    console.log("This geometric co-orrdinates from /constrollers/listingController{creatLisitng} :",coords);
+    */
+
+
+    // if cordinates are not found, return to /listing/new
+    if (!coords) {
+        req.flash("error", "Could not find the location.");
+        return res.redirect("/listing/new");
+    }
+
+    // add cordinates to the listing object in the req.body
+    req.body.listing.geometry = coords;
+
+
 
     // Re-formating the image element of the Lisiting object that is coming from edit.ejs. Making the image element an object with {url = req.body.listing.image}
     if (typeof req.file != "undefined") {

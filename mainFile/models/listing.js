@@ -8,6 +8,11 @@ const ListingSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    category: {
+        type: String,
+        enum: ['Trending', 'Rooms', 'Villa', 'Castles', 'Mountains', 'Pools', 'Camping', 'Farms', 'Arctic', 'All List'], // Define your allowed categories
+        default: 'All List'
+    },
     description: {
         type: String,
         require: true

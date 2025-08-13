@@ -25,6 +25,7 @@ const initDB = async () => {
     // adding the one owner to the all listings till now.
     Data.data = Data.data.map((obj) => ({
         ...obj,
+        geometry: { type: 'Point', coordinates: [ 83.0293105, 26.023639 ] },
         owner: '682ddd3557edea941815fddc'
     }));
 
@@ -32,4 +33,4 @@ const initDB = async () => {
     console.log("Data inserted successfully!!!");
 }
 
-// initDB();
+initDB();
