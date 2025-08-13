@@ -21,7 +21,8 @@ const listingSchema = Joi.object({
                 .items(Joi.number())
                 .length(2) // Must contain exactly [longitude, latitude]
                 .required()
-        })
+        }),
+        category: Joi.string()
     }).required()
 });
 
