@@ -5,6 +5,11 @@ This project is designed to let users browse, list, and manage room/hotel proper
 We welcome contributors from all backgrounds to help improve and grow this project together.
 
 ---
+**Connect with me:**  
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/jayprakash-maurya-05569626b/) 
+[![Discord](https://img.shields.io/badge/Discord-Join-7289DA?style=flat&logo=discord)](https://discord.gg/AK4vcrMf)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=flat&logo=github)](https://github.com/jayprakash-code77)
+---
 
 ## 📁 Project Structure
 
