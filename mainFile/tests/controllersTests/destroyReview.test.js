@@ -1,7 +1,7 @@
 // destroyReview.test.js
-const { destroyReview } = require("../controllers/reviewController");
-const {Listing} = require("../models/listing");
-const {Review}= require("../models/review");
+const { destroyReview } = require("../../controllers/reviewController");
+const {Listing} = require("../../models/listing");
+const {Review}= require("../../models/review");
 
 jest.mock("../models/listing");
 jest.mock("../models/review");
