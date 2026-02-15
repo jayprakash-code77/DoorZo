@@ -96,42 +96,61 @@ The app should now be running at:
 ## 🏗️ Project Structure
 ```bash
 Triple_T/
-├── mainFile/ # Primary application files
+mainFile/ # Primary application files
 ├── config/ # Configuration files
-│ ├── database.js # Database configuration
-│ └── server.js # Server settings
+│ ├── dbConfig.js # Database configuration
+│ └── cloudConfig.js # cloud configuration for image storage
 │
 ├── controllers/ # Business logic handlers
-│ ├── authController.js # Authentication logic
-│ └── apiController.js # API endpoint handlers
-│
+│ ├── listingController.js # For lisitng related controllers
+│ └── reviewController.js # For reviews related controllers
+│ └── userController.js # Controllers for users
 ├── init/ # Initialization scripts
+│ ├── data.js # Data for Database Initialization
+│ └── index.js # routers root file for DB Initialization
 ├── middleware/ # Custom middleware
-│ ├── auth.js # Authentication middleware
-│ └── errorHandler.js # Error handling
-│
+│ ├── authMiddleware.js # Authentication middleware
+│ └── isOwner.js # Error handling
+│ └── isReviewAuthor.js # Error handling
+│ └── postMiddleware.js # empty or not used
+│ └── preMiddleware.js # empty or not used
+│ └── schemaValidationMW.js # To validate the schema
 ├── models/ # Database models
-│ ├── User.js # User schema
-│ └── DataModel.js # Primary data schema
-│
+│ ├── listing.js # Listing schema
+│ └── review.js # Review schema
+│ └── user.js # User schema
 ├── node_modules/ # NPM dependencies (auto-generated)
 ├── public/ # Static assets
-│ ├── css/ # Stylesheets
-│ ├── js/ # Client-side scripts
+│ ├── CSS/ # Stylesheets
+│ ├── JS/ # Client-side scripts
 │ └── images/ # Image assets
 │
 ├── routes/ # Route definitions
-│ ├── api.js # API routes
-│ └── web.js # Web routes
-│
+│ ├── authRoute.js # Auth routes
+│ └── index.js # Access point on all routes
+│ └── listingRoute.js # Routes related to listing
+│ └── reviewRoute.js # Routes related to review
+├── tests/ # for writing the jest tests
+│ ├── ControllersTests/ # test for controllers
+│ 
 ├── uploads/ # User uploads directory
+│ 
 ├── utils/ # Utility functions
-│ ├── helpers.js # Helper functions
-│ └── validators.js # Validation utilities
+│ ├── ExpressError.js # For Express Error handling
+│ └── geoCode.js # geo coding (Map) utilities
+│ └── wrapAsync.js # To handle Asynchronous controllers (routes)
 │
 ├── views/ # Template files
-│ ├── layouts/ # Layout templates
-│ └── pages/ # Page templates
+│ ├── auth/ # Auth layouts
+│ └── includes/ # components 
+│ └── layouts/ # Different boilerplate code
+│ └── listings/ # layouts for listing
+│ └── allListings.ejs # Homepage
+│ └── edit.ejs # Layout to edit listing
+│ └── error.ejs # Layout for error
+│ └── map.ejs # Layout for Map
+│ └── new.ejs # Layout for creating new List
+│ └── show.ejs # Layout for displaying list details
 │
 ├── .env # Environment variables
 ├── .gitignore # Git ignore rules
